@@ -18,7 +18,7 @@ searchTerm = raw_input(' * What are your search terms? ')
 searchTerm = re.sub(r'#',"%23", searchTerm)
 desired_max_count = input(' * How many tweets do you want? ')
 
-pingtime = datetime.now().strftime('%H-%M (%Y-%m-%d) - ')
+pingtime = datetime.now().strftime('%H%M (%Y-%m-%d) - ')
 
 
 #COUNT CYCLES
@@ -49,10 +49,10 @@ url = makeurl(searchTerm)
 
 
 # API KEYS
-consumer_key    = ####################
-consumer_secret = ####################
-token_key       = ####################
-token_secret    = ####################
+consumer_key    = ##################################
+consumer_secret = ##################################
+token_key       = ##################################
+token_secret    = ##################################
 
 
 # OAUTH / CLIENT AUTH
@@ -71,23 +71,23 @@ for i in range(loopcount):
     results = len(data['statuses'])  
     
     for j in range(results):
-        #if data['statuses'][j]['coordinates'] != None : #COORDS MUST EXIST
+        if data['statuses'][j]['coordinates'] != None : #COORDS MUST EXIST
             tweet= data['statuses'][j]['text']
             date = data['statuses'][j]['created_at']
             user = data['statuses'][j]['user']['screen_name']
 
-            #coords = data['statuses'][j]['coordinates'].values()[1] #COORDS DATA
-            #lng = coords[0]
-            #lat = coords[1]
-
-            tweet = re.sub(r'\n',"", tweet) #PURGE ERRENOUS NEWLINES
-            tweet = re.sub(r'\n\n',"", tweet)
+            coords = data['statuses'][j]['coordinates'].values()[1] #COORDS DATA
+            lng = coords[0]
+            lat = coords[1]
+            
+            tweet = re.sub(r'\n\n',"", tweet) #REMOVE NEWLINES
+            tweet = re.sub(r'\n',"", tweet)
             
             tweet= tweet.encode('ascii', 'ignore')
             date = date.encode('ascii', 'ignore')
             user = user.encode('ascii', 'ignore')
 
-            localfile.write(date+',@'+user+','+tweet+','+'\n');
+            localfile.write(date+','+str(lat)+','+str(lng)+',@'+user+','+tweet+','+'\n');
 
     if results < 100:
         break
