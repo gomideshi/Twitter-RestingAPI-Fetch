@@ -1,7 +1,6 @@
 
 #---UPDATES-------------------------------------------------
 # - Added a small IF/THEN fork to offer geo-required content
-# - Added random pauses to mitigate rate limiting (ineffective)
 #-----------------------------------------------------------
 
 import oauth2 as oauth
@@ -20,8 +19,6 @@ geoflag             = raw_input (' * Do you need geo coordinates? (YES or NO) ')
 
 pingtime = datetime.now().strftime('%H%M - ')
 searchTerm = re.sub(r'#',"%23", searchTerm)
-ktimer = randint(3,9)
-k = 0
 
 #COUNT CYCLES
 MAX_RESULTS_FROM_TWITTER = 100
@@ -93,15 +90,6 @@ if (geoflag == 'YES') or (geoflag == 'yes') or (geoflag == 'y') or (geoflag == '
 
                 localfile.write(date+','+str(lat)+','+str(lng)+',@'+user+','+tweet+','+'\n');
 
-                k += 1
-                if k == 5:
-                    print ' * RESTING FOR (' + str(ktimer) + ') SECONDS!'
-                    time.sleep(ktimer)
-                    ktimer = randint(3,12)
-                    k = 0
-                else:
-                    pass
-
         if results < 100:
             break
 
@@ -137,15 +125,6 @@ else:
             user = user.encode('ascii', 'ignore')
 
             localfile.write(date+',@'+user+','+tweet+','+'\n');
-
-            k += 1
-            if k == 5:
-                print ' * RESTING FOR (' + str(ktimer) + ') SECONDS!'
-                time.sleep(ktimer)
-                ktimer = randint(3,12)
-                k = 0
-            else:
-                pass
 
     if results < 100:
         pass
