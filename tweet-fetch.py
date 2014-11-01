@@ -1,13 +1,13 @@
 
 #---UPDATES-------------------------------------------------
-# - Added a small IF/THEN fork to offer geo-required content
+# - Moved API keys into assets.
 #-----------------------------------------------------------
 
 import oauth2 as oauth
 import json, sys, re
 import time, csv
-from random import randint
 from datetime import datetime
+from keys import *
 
 
 #PROMPT SEARCH TERMS / VOLUME
@@ -45,13 +45,6 @@ def makeurl(searchterm, max_id=0) :
               + 'count=' + count    
     return url 
 url = makeurl(searchTerm)
-
-
-# API KEYS
-consumer_key    = ###
-consumer_secret = ###
-token_key       = ###
-token_secret    = ###
 
 
 # OAUTH / CLIENT AUTH
